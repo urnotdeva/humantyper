@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "matcher": "Write|StrReplace|Delete|EditNotebook|ApplyPatch",
+        "command": ".cursor/hooks/deny-native-edits.sh",
+        "failClosed": true
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/deny-shell-writes.sh",
+        "failClosed": true
+      }
+    ]
+  }
+}

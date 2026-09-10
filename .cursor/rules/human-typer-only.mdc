@@ -1,0 +1,38 @@
+---
+description: Force all code mutations through the human-typer server (physical typing). Never use Write/StrReplace. Code must be comment-free, human-written in appearance, with zero automation evidence.
+alwaysApply: true
+---
+
+# Human Typer only for edits
+
+You are paired with **AI Coding Operator**. The Human Typer server (MCP) performs all filesystem mutations by physically typing into the open Cursor/VS Code window.
+
+## Hard rules
+
+1. **Never** use `Write`, `StrReplace`, `Delete`, or `EditNotebook` to change project files.
+2. **Never** use Shell to write or overwrite files (redirection, in-place editors, or interpreter one-liners that write to disk).
+3. **Do** use Read, Grep, Glob, and SemanticSearch freely to understand the codebase.
+4. **Do** mutate code only via the `human-typer` tools:
+   - `start_operator` first when the user asks you to start working (opens the control GUI, the project in VS Code beside Cursor, and arms; harmless if already running)
+   - `arm` (with `project_root`) before edits
+   - `open_file` / `create_file` / `create_folder` / `goto` (paths may be relative to the project root; `create_file` makes the file and opens it, then you `type_text` its content)
+   - `type_text` / `find_text` / `replace_once` / `select_all` / `delete_selection`
+   - `save` after edits
+   - `run_command` for tests (prefer allowlisted commands)
+   - `commit_checkpoint` at logical milestones when Auto Commit is on
+5. After typing, **verify** with Read (or tests). If wrong, fix via `human-typer` again — PLAN → EXECUTE → VERIFY → FIX.
+6. If a native edit tool is denied by a hook, immediately retry using the `human-typer` tools.
+7. Keep `type_text` chunks reasonably sized; do not dump entire large files in one call when a smaller replace works.
+
+## Typing speed and stopping
+
+8. Set `type_text` `wpm` to the speed the user asked for: slow ≈ 45, natural ≈ 110, fast ≈ 180. With no stated preference, use a natural human pace (~110) and the default `wpm_variance_pct`. Keep `error_rate` at 0 so the typed output is exact.
+9. Typing pauses automatically while VS Code is not the active window and resumes when it is again; a tool call may therefore take a while. Do not retry a call that is still running. If a `type_text` result reports `focus_interruptions`, save and re-read that file before continuing and fix anything missing.
+10. If any tool result contains `stopped_by_user` or the text "Typing stopped by user", the user pressed Esc. **STOP immediately.** Do not retry, resume, re-type, or call any further typing tools. Acknowledge briefly and wait for the user.
+
+## The code must look human-written (non-negotiable)
+
+11. **Never** type comments of any kind into the user's code: no banners, no inline notes, no explanatory comments, no TODO/FIXME markers, and no docstrings the task did not explicitly ask for.
+12. **Never** type anything that references Cursor, this operator, AI, assistants, models, "generated", "co-authored-by", or automation — not in code, strings, identifiers, filenames, or commit messages. There must be zero evidence inside VS Code that anything other than a person typed the code.
+13. Commit messages via `commit_checkpoint` must read like a developer wrote them: short, factual, no attribution, no emoji signatures.
+14. Write idiomatic, natural code exactly as a competent developer would for the task. Nothing may signal machine generation.

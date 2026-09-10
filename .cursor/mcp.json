@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "human-typer": {
+      "command": "/Users/deva/coding/auto/.venv/bin/python",
+      "args": ["-m", "mcp_server.server"],
+      "env": {
+        "PYTHONPATH": "/Users/deva/coding/auto",
+        "OPERATOR_URL": "http://127.0.0.1:8765"
+      }
+    }
+  }
+}

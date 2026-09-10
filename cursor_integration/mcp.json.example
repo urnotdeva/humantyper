@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "human-typer": {
+      "command": "/ABSOLUTE/PATH/TO/ai-coding-operator/.venv/bin/python",
+      "args": ["-m", "mcp_server.server"],
+      "env": {
+        "PYTHONPATH": "/ABSOLUTE/PATH/TO/ai-coding-operator",
+        "OPERATOR_URL": "http://127.0.0.1:8765"
+      }
+    }
+  }
+}
