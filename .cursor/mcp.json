@@ -1,11 +1,13 @@
 {
   "mcpServers": {
     "human-typer": {
-      "command": "/Users/deva/coding/auto/.venv/bin/python",
+      "command": "/Users/deva/Documents/GitHub/humantyper/.venv/bin/python3.14",
       "args": ["-m", "mcp_server.server"],
       "env": {
-        "PYTHONPATH": "/Users/deva/coding/auto",
-        "OPERATOR_URL": "http://127.0.0.1:8765"
+        "PYTHONPATH": "/Users/deva/Documents/GitHub/humantyper",
+        "OPERATOR_URL": "http://127.0.0.1:8765",
+        "OPERATOR_PROJECT": "/Users/deva/Documents/Codes",
+        "OPERATOR_IDE": "Visual Studio Code"
       }
     }
   }
